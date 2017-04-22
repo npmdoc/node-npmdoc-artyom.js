@@ -1,0 +1,337 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://sdkcarlos.github.io/sites/artyom.html">artyom.js (v1.0.5)</a>
+</h1>
+<h4>Artyom is a Robust Wrapper of the Google Chrome SpeechSynthesis and SpeechRecognition that allows you to create a virtual assistent</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.artyom.js">module artyom.js</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.artyom.js.ArtyomBuilder">
+            function <span class="apidocSignatureSpan">artyom.js.</span>ArtyomBuilder
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.artyom.js.ArtyomJsImpl">
+            function <span class="apidocSignatureSpan">artyom.js.</span>ArtyomJsImpl
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.artyom.js.js.ArtyomBuilder">
+            function <span class="apidocSignatureSpan">artyom.js.</span>js.ArtyomBuilder
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.artyom.js.ArtyomBuilder">module artyom.js.ArtyomBuilder</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.artyom.js.ArtyomBuilder.ArtyomBuilder">
+            function <span class="apidocSignatureSpan">artyom.js.</span>ArtyomBuilder
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.artyom.js.ArtyomBuilder.getInstance">
+            function <span class="apidocSignatureSpan">artyom.js.ArtyomBuilder.</span>getInstance
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.artyom.js" id="apidoc.module.artyom.js">module artyom.js</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.artyom.js.ArtyomBuilder" id="apidoc.element.artyom.js.ArtyomBuilder">
+        function <span class="apidocSignatureSpan">artyom.js.</span>ArtyomBuilder
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ArtyomBuilder() {
+    var artyom;
+    var artyomVoice = 'Google UK English Male';
+    var artyom_garbage_collector = [];
+    var artyomCommands = [];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.artyom.js.ArtyomJsImpl" id="apidoc.element.artyom.js.ArtyomJsImpl">
+        function <span class="apidocSignatureSpan">artyom.js.</span>ArtyomJsImpl
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ArtyomJsImpl() {
+    var _this = this;
+    this.artyomCommands = [];
+    this.artyomGarbageCollector = [];
+    this.device = {
+        isChrome: function () { return ArtyomHelpers.isChrome(); },
+        isMobile: function () { return !!ArtyomHelpers.isMobileDevice(); }
+    };
+    this.getVoices = function () {
+        return (window['speechSynthesis']).getVoices();
+    };
+    this.getAvailableCommands = function () {
+        return _this.artyomCommands;
+    };
+    this.initialize = function (config) {
+        if (typeof (config) !== "object") {
+            return Promise.reject("You must give the configuration for start artyom properly.");
+        }
+        if (config.hasOwnProperty("lang")) {
+            _this.artyomVoice = ArtyomInternals.getVoice(config.lang);
+            _this.artyomProperties.lang = config.lang;
+        }
+        if (config.hasOwnProperty("continuous")) {
+            if (config.continuous) {
+                _this.artyomProperties.continuous = true;
+                _this.artyomFlags.restartRecognition = true;
+            }
+            else {
+                _this.artyomProperties.continuous = false;
+                _this.artyomFlags.restartRecognition = false;
+            }
+        }
+        if (config.hasOwnProperty("speed")) {
+            _this.artyomProperties.speed = config.speed;
+        }
+        if (config.hasOwnProperty("soundex")) {
+            _this.artyomProperties.soundex = config.soundex;
+        }
+        if (config.hasOwnProperty("executionKeyword")) {
+            _this.artyomProperties.executionKeyword = config.executionKeyword;
+        }
+        if (config.hasOwnProperty("obeyKeyword")) {
+            _this.artyomProperties.obeyKeyword = config.obeyKeyword;
+        }
+        if (config.hasOwnProperty("volume")) {
+            _this.artyomProperties.volume = config.volume;
+        }
+        if (config.hasOwnProperty("listen")) {
+            _this.artyomProperties.listen = config.listen;
+        }
+        if (config.hasOwnProperty("debug")) {
+            _this.artyomProperties.debug = config.debug;
+        }
+        else {
+            console.warn("The initialization doesn't provide how the debug mode should be handled. Is recommendable to set this
+value either to true or false.");
+        }
+        if (config.mode) {
+            _this.artyomProperties.mode = config.mode;
+        }
+        if (_this.artyomProperties.listen === true) {
+            var hey_1 = _this.artyomHey;
+            return new Promise(function (resolve, reject) {
+                hey_1(resolve, reject);
+            });
+        }
+        return Promise.resolve(undefined);
+    };
+    this.fatality = function () {
+        try {
+            // if config is continuous mode, deactivate anyway.
+            _this.artyomFlags.restartRecognition = false;
+            _this.artyomWSR.stop();
+            return true;
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+    };
+    this.addCommands = function (param) {
+        var _processObject = function (obj) {
+            if (obj.hasOwnProperty("indexes")) {
+                _this.artyomCommands.push(obj);
+            }
+            else {
+                console.error("The following command doesn't provide any index to execute :");
+                console.dir(obj);
+            }
+        };
+        if (param instanceof Array) {
+            var paramLength = param.length;
+            for (var i = 0; i &lt; paramLength; i++) {
+                _processObject(param[i]);
+            }
+        }
+        else {
+            _processObject(param);
+        }
+        return true;
+    };
+    this.removeCommands = function (identifier) {
+        var toDelete = [];
+        if (typeof (identifier) === "string") {
+            var commandsLength = _this.artyomCommands.length;
+            for (var i = 0; i &lt; commandsLength; i++) {
+                var command = _this.artyomCommands[i];
+                if (command.indexes.indexOf(identifier)) { ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.artyom.js.js.ArtyomBuilder" id="apidoc.element.artyom.js.js.ArtyomBuilder">
+        function <span class="apidocSignatureSpan">artyom.js.</span>js.ArtyomBuilder
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ArtyomBuilder() {
+    var artyom;
+    var artyomVoice = 'Google UK English Male';
+    var artyom_garbage_collector = [];
+    var artyomCommands = [];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.artyom.js.ArtyomBuilder" id="apidoc.module.artyom.js.ArtyomBuilder">module artyom.js.ArtyomBuilder</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.artyom.js.ArtyomBuilder.ArtyomBuilder" id="apidoc.element.artyom.js.ArtyomBuilder.ArtyomBuilder">
+        function <span class="apidocSignatureSpan">artyom.js.</span>ArtyomBuilder
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ArtyomBuilder() {
+    var artyom;
+    var artyomVoice = 'Google UK English Male';
+    var artyom_garbage_collector = [];
+    var artyomCommands = [];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.artyom.js.ArtyomBuilder.getInstance" id="apidoc.element.artyom.js.ArtyomBuilder.getInstance">
+        function <span class="apidocSignatureSpan">artyom.js.ArtyomBuilder.</span>getInstance
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getInstance = function () {
+    if (!ArtyomBuilder.instance) {
+        // Protect the instance to be inherited
+        ArtyomBuilder.instance = Object.preventExtensions(new ArtyomJsImpl());
+    }
+    // Return the instance
+    return ArtyomBuilder.instance;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+## With Angular2 (TypeScript)
+
+Artyom is also written in TypeScript (.js transpiled from .ts + its definition file -.d.ts) in order to improve the performance
+in
+some parts of the library. In that case, the module loader used is CommonJS. Example of use with Angular2 &amp; TypeScript:
+
+```javascript
+import * as Artyom from 'artyom.js';
+let artyom = Artyom.ArtyomBuilder.<span class="apidocCodeKeywordSpan">getInstance</span>();
+
+// Add a command (not smart)
+artyom.addCommands({
+description: 'Test command',
+indexes: ['hello', 'hi'],
+action: (i) =&gt; {
+    console.log('hello action');
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
